@@ -1,0 +1,4 @@
+These are the list of candidates in training phase
+kajal
+xavier
+tuni
