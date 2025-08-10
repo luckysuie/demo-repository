@@ -1,4 +1,3 @@
-pipeline 
 pipeline {
     agent any
 
@@ -7,13 +6,25 @@ pipeline {
             steps {
                 git url: 'https://github.com/luckysuie/demo-repository.git', branch: 'master'
             }
-        } 
-        stage('Inialize Terraform') {
+        }
+        stage('Login to Azure') {
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'azure-sp', usernameVariable: 'AZURE_USERNAME', passwordVariable: 'AZURE_PASSWORD'),
+                    string(credentialsId: 'azure-tenant', variable: 'AZURE_TENANT')
+                ]) {
+                    sh '''
+                    az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $AZURE_TENANT
+                    '''
+                }
+            }
+        }
+        stage('Initialize Terraform') {
             steps {
                 sh 'terraform init'
             }
         }
-        stage('Terraform validate') {
+        stage('Terraform Validate') {
             steps {
                 sh 'terraform validate'
             }
