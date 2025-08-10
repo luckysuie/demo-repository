@@ -7,6 +7,12 @@ pipeline {
                 git url: 'https://github.com/luckysuie/demo-repository.git', branch: 'master'
             }
         }
+        stage('Trivia Scan') {
+            steps {
+                sh 'trivy fs --exit-code 1 --severity HIGH,CRITICAL . --output trivy-report.txt || true'
+                archiveArtifacts artifacts: 'trivy-report.txt', allowEmptyArchive: true
+            }
+        }
         stage('Login to Azure') {
             steps {
                 withCredentials([
