@@ -25,12 +25,12 @@ pipeline {
                 }
             }
         }
-        stage('Initialize Terraformm') {
+        stage('Initialize Terraform') {
             steps {
                 sh 'terraform init'
             }
         }
-        stage('Terraform Validatee') {
+        stage('Terraform Validate') {
             steps {
                 sh 'terraform validate'
             }
@@ -48,7 +48,7 @@ pipeline {
         stage('Prometheus Monitoring') {
             steps {
                 sh '''
-                # Restart Prometheus to apply the new scrape targets, if needed
+                # Restart Prometheus service to apply changes without requiring password
                 sudo systemctl restart prometheus
                 '''
             }
