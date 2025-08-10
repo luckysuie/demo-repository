@@ -3,7 +3,7 @@ provider "azurerm" {
   # Configuration options
 
   features{}
-subscription_id = "yoursubscriptionid" # Replace with your Azure subscription ID
+subscription_id = "946461f2-5424-4818-bd06-010e5f3cd8c1" # Replace with your Azure subscription ID
 }
 
 resource "azurerm_resource_group" "lucky" {
