@@ -45,5 +45,13 @@ pipeline {
                 sh 'terraform apply -auto-approve tfplan'
             }
         }
+        stage('Prometheus Monitoring') {
+            steps {
+                sh '''
+                # Restart Prometheus to apply the new scrape targets, if needed
+                sudo systemctl restart prometheus
+                '''
+            }
+        }
     }
 }
